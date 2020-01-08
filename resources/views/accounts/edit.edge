@@ -1,0 +1,29 @@
+@layout('layout.default')
+
+@section('content')
+  <div class="app-container align content">
+    <h1>Edit Account {{id}}</h1>
+    <form class="app-form" action="{{ route('accounts.update', { id: account.id}) }}?_method=PUT" method="POST">
+      {{ csrfField() }}
+      <div class="form-group">
+        <label for="formGroupExampleInput">Name</label>
+        <input type="text" name="name" class="form-control" id="formGroupExampleInput" value="{{ old('name', account.name)}}">{{elIf('<span class = "text-danger">$self</span>', getErrorFor('name'), hasErrorFor('name')) }}
+      </div>
+      <div class="form-group">
+        <label for="inputGroupSelect02">Currency</label>
+        <select name="currency_id" class="custom-select" id="inputGroupSelect02">
+          <option value="">Choose...</option>
+          @each((name, id) in currencies)
+            <option value="{{id}}" {{ (old("currency_id", account.getRelated('currency').id)==id ? "selected" : "") }} >{{ name }}</option>
+          @endeach
+        </select>
+        {{elIf('<span class = "text-danger">$self</span>', getErrorFor('currency_id'), hasErrorFor('currency_id')) }}
+      </div>
+      <div class="align">
+        <button type="submit" class="btn btn-secondary">Edit</button>
+        <a href="{{ route('accounts.index') }}" role="button" class="btn btn-secondary">Cancel</a>
+      </div>
+    </form>
+  </div>
+@endsection
+

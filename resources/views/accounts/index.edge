@@ -1,0 +1,62 @@
+@layout('layout.default')
+
+@section('content')
+
+<div class="app-container align">
+  <div class="create">
+    <a href="{{ route('accounts.create') }}" role="button" class="btn btn-secondary"><i class="fa fa-plus"></i> Add
+    </a>
+  </div>
+  <div class="content">
+    <h1 class="title">{{name}}</h1>
+    @if(old('notification'))
+      <div class="alert alert-success">
+        {{ old('notification') }}
+      </div>
+    @endif
+    @if(accounts.length === 0)
+      <div>
+        <p>You don't have accounts yet.</p>
+      </div>
+    @else
+      <table class="table table-hover br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw10 shadow-5 center">
+        <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Currency</th>
+          <th scope="col">User</th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        @each(account in accounts)
+        <tbody>
+        <tr>
+          <td>{{account.name}}</td>
+          <td>
+            @if(account.currency)
+              {{account.currency.name}}
+            @endif
+          </td>
+          <td>
+            @if(account.user)
+            {{account.user.username}}
+            @endif
+          </td>
+          <td>
+            <div class="buttons">
+              <a href="{{ route('accounts.edit', { id: account.id}) }}" role="button" class="btn btn-secondary">Edit</a>
+              <form action="{{ route('accounts.destroy', { id: account.id}) }}?_method=DELETE" method="POST">
+                {{csrfField()}}
+                <button type="submit" class="btn btn-secondary">Delete</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+        @endeach
+      </table>
+    @endif
+  </div>
+</div>
+@endsection
+

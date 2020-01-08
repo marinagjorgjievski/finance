@@ -1,0 +1,12 @@
+@layout('layout/default')
+
+@section('content')
+<div class="container">
+  {{ style('style-homepage') }}
+  <h1>Create your accounts
+    @if(auth.user)
+      {{ auth.user.username }}
+    @endif
+  </h1>
+</div>
+@endsection

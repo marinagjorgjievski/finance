@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300');
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  background: linear-gradient(to right, #8e9eab, #eef2f3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+section {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 536px;
+  margin: auto;
+  position: relative;
+}
+
+section:before {
+  content: "";
+  position: absolute;
+  background-size: 100%;
+  width: 100%;
+  height: 402px;
+  z-index: -1;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+p {
+  margin: 0.83rem 0;
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.2%;
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.buttons {
+  text-align: right;
+}
+
+.buttons form {
+  display: inline-block;
+}
+
+.create {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 10px;
+}
+
+.app-container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media only screen and (min-width: 992px) {
+  .app-container {
+    max-width: 962px;
+
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .app-container {
+    max-width: 962px;
+  }
+}
+
+.title {
+  margin-bottom: 40px;
+}
+
+.form-group {
+  text-align: left;
+}
+
+.align {
+  text-align: center;
+  font-size: 20px;
+}
+
+.btn-secondary {
+  text-decoration: none;
+  color: #fff;
+  background-color: #3CB371;
+  border-color: #3CB371;
+}
+
+.table {
+  text-align: left;
+}
+
+/*navigation*/
+.bg-primary {
+  background-color: #3CB371!important;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: white;
+}
+
+.app-form {
+  max-width: 600px;
+  margin: auto;
+}
