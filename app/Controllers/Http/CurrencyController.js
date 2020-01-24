@@ -21,7 +21,7 @@ class CurrencyController {
     const currencies = await Currency.all();
 
     return view.render('currencies.index', {
-      name: 'List Currencies',
+      name: 'List of currencies',
       currencies: currencies.toJSON()
     })
   }

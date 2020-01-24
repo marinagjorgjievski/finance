@@ -1,0 +1,41 @@
+@layout('layout.default')
+
+@section('content')
+
+<article class="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
+  <main class="pa4 black-80">
+    <div class="measure">
+      <form action="{{ route('entries.update', { id: entry.id}) }}?_method=PUT" method="POST">
+        {{ csrfField() }}
+        <fieldset id="" class="ba b--transparent ph0 mh0">
+          <hr>
+          <legend class="f1 fw6 ph0 mh0">Edit Entry</legend>
+          <div class="mt3">
+            <label class="db fw6 lh-copy f6" For="account_id">Account</label>
+          </div>
+          <select class="custom-select input-reset ba b--black bg-transparent hover-bg-black hover-gray w-100" name="account_id" id="account_id">
+            <option value="">Choose...</option>
+            @each((name, id) in accounts)
+            <option value="{{id}}" {{ (old("account_id", entry.getRelated('account').id)==id ? "selected" : "") }} >{{ name }}</option>
+            @endeach
+          </select>
+          {{elIf('<span class = "text-danger">$self</span>', getErrorFor('account_id'), hasErrorFor('account_id')) }}
+          <div class="mt3">
+            <label class="db fw6 lh-copy f6" For="date">Date</label>
+            <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-gray w-100" type="date" name="date" id="date" value="{{ old('date', entry.date)}}">{{elIf('<span class = "text-danger">$self</span>', getErrorFor('date'), hasErrorFor('date')) }}
+          </div>
+          <div class="mt3">
+            <label class="db fw6 lh-copy f6" For="value">Value</label>
+            <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-gray w-100" type="number" name="value" id="value" value="{{ old('value', entry.value)}}">{{elIf('<span class = "text-danger">$self</span>', getErrorFor('value'), hasErrorFor('value')) }}
+          </div>
+        </fieldset>
+        <div class="btn-position">
+          <button type="submit" class="btn btn-secondary">Edit</button>
+          <a href="{{ route('entries.index') }}" role="button" class="btn btn-secondary">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </main>
+</article>
+@endsection
+

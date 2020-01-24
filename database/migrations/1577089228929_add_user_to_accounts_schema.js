@@ -12,6 +12,7 @@ class AddUserToAccountsSchema extends Schema {
 
   down () {
     this.table('accounts', (table) => {
+      table.dropForeign('user_id');
       table.dropColumn('user_id')
     })
   }

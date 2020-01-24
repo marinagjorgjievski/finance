@@ -24,6 +24,7 @@ Route.get('hello-world', ({ view }) => {
 
 Route.resource('accounts', 'AccountController').middleware('auth')
 Route.resource('currencies', 'CurrencyController').middleware('auth')
+Route.resource('entries', 'EntryController').middleware('auth')
 
 
 Route.get('/sing-in', 'AuthController.signIn').as('auth.sign-in');

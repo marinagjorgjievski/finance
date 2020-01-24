@@ -14,7 +14,7 @@ class CurrenciesSchema extends Schema {
   }
 
   down () {
-    this.drop('accounts')
+    this.drop('currencies')
   }
 }
 

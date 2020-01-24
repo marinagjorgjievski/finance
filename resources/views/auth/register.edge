@@ -2,6 +2,11 @@
 
 @section('content')
 <article class="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
+  @if(old('notification'))
+  <div class="alert alert-danger">
+    {{ old('notification') }}
+  </div>
+  @endif
   <main class="pa4 black-80">
     <div class="measure">
 
@@ -13,19 +18,22 @@
           <legend class="f1 fw6 ph0 mh0">Register</legend>
           <div class="mt3">
             <label class="db fw6 lh-copy f6" For="name">Username</label>
-            <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-gray w-100" type="text" name="username"  id="name"/>
+            <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-gray w-100" type="text" name="username"  id="name" value="{{ old('username', '') }}"/>
+            {{ elIf('<span class="error-messages">$self</span>', getErrorFor('username'), hasErrorFor('username')) }}
           </div>
           <div class="mt3">
             <label class="db fw6 lh-copy f6" For="email">Email</label>
-            <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-gray w-100" type="email" name="email"  id="email"/>
+            <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-gray w-100" type="email" name="email"  id="email" value="{{ old('email', '') }}"/>
+            {{ elIf('<span class="error-messages">$self</span>', getErrorFor('email'), hasErrorFor('email')) }}
           </div>
           <div class="mv3">
             <label class="db fw6 lh-copy f6" For="password">Password</label>
             <input class="b pa2 input-reset ba bg-transparent hover-bg-black hover-gray w-100" type="password" name="password"  id="password"/>
+            {{ elIf('<span class="error-messages">$self</span>', getErrorFor('password'), hasErrorFor('password')) }}
           </div>
           <div class="mv3">
             <label class="db fw6 lh-copy f6" For="password">Repeat Password</label>
-            <input type="password" class="b pa2 input-reset ba bg-transparent hover-bg-black hover-gray w-100" id="psw-repeat" name="psw-repeat" required>
+            <input type="password" class="b pa2 input-reset ba bg-transparent hover-bg-black hover-gray w-100" id="password_confirmation" name="password_confirmation" required>
           </div>
         </fieldset>
         <div class="">

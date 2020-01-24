@@ -4,7 +4,8 @@
 
 <div class="app-container align">
   <div class="create">
-    <a href="{{ route('currencies.create') }}" role="button" class="btn btn-secondary"><i class="fa fa-plus"></i> Add</a>
+    <a href="{{ route('entries.create') }}" role="button" class="btn btn-secondary"><i class="fa fa-plus"></i> Add
+    </a>
   </div>
   <div class="content">
     <h1 class="title">{{name}}</h1>
@@ -13,28 +14,32 @@
       {{ old('notification') }}
     </div>
     @endif
-    @if(currencies.length === 0)
+    @if(entries.length === 0)
     <div>
-      <p>You don't have currencies yet.</p>
+      <p>You don't have entries yet.</p>
     </div>
     @else
     <table class="table table-hover br3 ba b--black-10 w-100 w-50-m w-25-l mw10 shadow-5 center">
       <thead>
       <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Symbol</th>
+        <th scope="col">Account</th>
+        <th scope="col">Date</th>
+        <th scope="col">Value</th>
         <th scope="col"></th>
       </tr>
       </thead>
-      @each(currency in currencies)
+      @each(entry in entries)
       <tbody>
       <tr>
-        <td>{{ currency.name }}</td>
-        <td>{{ currency.symbol}}</td>
+        <td>{{entry.account.name}}</td>
+        <td>{{entry.date}}
+        </td>
+        <td>{{entry.value}}
+        </td>
         <td>
           <div class="buttons">
-            <a href="{{ route('currencies.edit', { id: currency.id}) }}" role="button" class="btn btn-secondary">Edit</a>
-            <form action="{{ route('currencies.destroy', { id: currency.id}) }}?_method=DELETE" method="POST">
+            <a href="{{ route('entries.edit', { id: entry.id}) }}" role="button" class="btn btn-secondary">Edit</a>
+            <form action="{{ route('entries.destroy', { id: entry.id}) }}?_method=DELETE" method="POST">
               {{csrfField()}}
               <button type="submit" class="btn btn-secondary">Delete</button>
             </form>

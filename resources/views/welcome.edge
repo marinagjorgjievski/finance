@@ -3,6 +3,7 @@
 @section('content')
 <div class="container">
   {{ style('style-homepage') }}
+  {{ style('style') }}
   <h1>Create your accounts
     @if(auth.user)
       {{ auth.user.username }}

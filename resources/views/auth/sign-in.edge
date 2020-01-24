@@ -11,11 +11,13 @@
           <legend class="f1 fw6 ph0 mh0">Sign In</legend>
           <div class="mt3">
             <label class="db fw6 lh-copy f6" For="email">Email</label>
-            <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-gray w-100" type="email" name="email"  id="email"/>
+            <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-gray w-100" type="email" name="email"  id="email" value="{{ old('email', '') }}"/>
+            {{ elIf('<span class="error-messages">$self</span>', getErrorFor('email'), hasErrorFor('email')) }}
           </div>
           <div class="mv3">
             <label class="db fw6 lh-copy f6" For="password">Password</label>
             <input class="b pa2 input-reset ba bg-transparent hover-bg-black hover-gray w-100" type="password" name="password"  id="password"/>
+            {{ elIf('<span class="error-messages">$self</span>', getErrorFor('password'), hasErrorFor('password')) }}
           </div>
         </fieldset>
         <div class="">
