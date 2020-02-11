@@ -5,6 +5,11 @@
 <article class="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
   <main class="pa4 black-80">
     <div class="measure">
+      @if(old('notification'))
+        <div class="alert alert-success">
+          {{ old('notification') }}
+        </div>
+      @endif
       <form action="{{ route('entries.update', { id: entry.id}) }}?_method=PUT" method="POST">
         {{ csrfField() }}
         <fieldset id="" class="ba b--transparent ph0 mh0">
@@ -15,18 +20,35 @@
           </div>
           <select class="custom-select input-reset ba b--black bg-transparent hover-bg-black hover-gray w-100" name="account_id" id="account_id">
             <option value="">Choose...</option>
-            @each((name, id) in accounts)
-            <option value="{{id}}" {{ (old("account_id", entry.getRelated('account').id)==id ? "selected" : "") }} >{{ name }}</option>
+            @each(account in accounts)
+              <option value="{{account.id}}" {{ (old("account_id", entry.account.id)==account.id ? "selected" : "") }} >{{ account.name }}</option>
             @endeach
           </select>
+          <script>
+            var accountsCurrencies = {};
+            @each(account in accounts)
+              accountsCurrencies[{{ account.id }}] = '{{ account.currency.symbol }}';
+            @endeach
+            document.querySelector('#account_id').addEventListener('change', function() {
+              var symbol = '';
+              if (accountsCurrencies[this.value]) {
+                symbol = accountsCurrencies[this.value];
+              }
+              document.querySelector('.amount-icon').innerHTML = symbol;
+            });
+          </script>
           {{elIf('<span class = "text-danger">$self</span>', getErrorFor('account_id'), hasErrorFor('account_id')) }}
           <div class="mt3">
             <label class="db fw6 lh-copy f6" For="date">Date</label>
-            <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-gray w-100" type="date" name="date" id="date" value="{{ old('date', entry.date)}}">{{elIf('<span class = "text-danger">$self</span>', getErrorFor('date'), hasErrorFor('date')) }}
+            <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-gray w-100" type="text" name="date" id="date" value="{{ old('date', entry.date)}}">{{elIf('<span class = "text-danger">$self</span>', getErrorFor('date'), hasErrorFor('date')) }}
           </div>
           <div class="mt3">
             <label class="db fw6 lh-copy f6" For="amount">Amount</label>
-            <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-gray w-100" type="number" name="amount" id="amount" value="{{ old('amount', entry.amount)}}">{{elIf('<span class = "text-danger">$self</span>', getErrorFor('amount'), hasErrorFor('amount')) }}
+            <div class="input-icon">
+              <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-gray w-100" type="number" step=".01" name="amount" id="amount" value="{{ old('amount', entry.amount)}}">
+              <i class="bt br bb amount-icon">{{ entry.account.currency.symbol }}</i>
+            </div>
+            {{elIf('<span class = "text-danger">$self</span>', getErrorFor('amount'), hasErrorFor('amount')) }}
           </div>
         </fieldset>
         <div class="btn-position">
@@ -39,3 +61,10 @@
 </article>
 @endsection
 
+@section('scripts')
+<script>
+  $('#date').datepicker({
+    dateFormat: "dd/mm/yy"
+  });
+</script>
+@endsection

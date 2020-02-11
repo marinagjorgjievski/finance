@@ -150,3 +150,17 @@ p {
 .navbar {
   position: fixed;
 }
+
+.input-icon {
+  display: flex;
+}
+
+.input-icon > i {
+  pointer-events: none;
+  width: 50px;
+  text-align: center;
+  font-style: normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

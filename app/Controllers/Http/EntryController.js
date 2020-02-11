@@ -10,6 +10,7 @@ const Entry = use('App/Models/Entry')
 const Account = use('App/Models/Account')
 const Currency = use('App/Models/Currency')
 const User = use('App/Models/User')
+const moment = require('moment')
 
 // Bring in validator
 const { validate } = use('Validator')
@@ -34,10 +35,13 @@ class EntryController {
   }
 
   async create ({ request, response, view }) {
-    let accounts = await Account.pair('id', 'name')
+    let accounts = await Account
+      .query()
+      .with('currency')
+      .fetch();
 
     return view.render('entries.create', {
-      accounts: accounts
+      accounts: accounts.toJSON()
     })
   }
 
@@ -56,8 +60,17 @@ class EntryController {
       return response.redirect('back')
     }
 
+    const entryDate = moment(request.input('date'), 'DD/MM/YYYY');
+
+    if (!entryDate.isValid()) {
+      session
+        .withErrors(validation.messages())
+        .flashExcept(['password'])
+      return response.redirect('back')
+    }
+
     entry.account_id = request.input('account_id')
-    entry.date = request.input('date')
+    entry.date = entryDate
     entry.amount = request.input('amount')
 
     await entry.save()
@@ -74,6 +87,7 @@ class EntryController {
 
     const entry = await Entry
       .query()
+      .with('account.currency')
       .with('account.user')
       .where('id', params.id)
       .firstOrFail();
@@ -86,11 +100,14 @@ class EntryController {
       return response.route('entries.index')
     }
 
-    let accounts = await Account.pair('id', 'name')
+    let accounts = await Account
+      .query()
+      .with('currency')
+      .fetch();
 
     return view.render('entries.edit', {
-      entry: entry,
-      accounts: accounts
+      entry: entry.toJSON(),
+      accounts: accounts.toJSON()
     })
   }
 
@@ -111,14 +128,30 @@ class EntryController {
     }
 
     //Validate input
-    const validation = await validate(request.all(),{
-      account_id: 'required|min:1|max:255',
-      date: 'required|min:1',
-      amount: 'required|min:1'
+    const validation = await validate(request.all(), {
+      account_id: 'required',
+      date: 'required',
+      amount: 'required'
     })
 
+    if (validation.fails()) {
+      session
+        .withErrors(validation.messages())
+        .flashAll()
+      return response.redirect('back')
+    }
+
+    const entryDate = moment(request.input('date'), 'DD/MM/YYYY');
+
+    if (!entryDate.isValid()) {
+      session
+        .withErrors(validation.messages())
+        .flashAll()
+      return response.redirect('back')
+    }
+
     entry.account_id = request.input('account_id')
-    entry.date = request.input('date')
+    entry.date = entryDate.format('YYYY-MM-DD')
     entry.amount = request.input('amount')
 
     await entry.save()
