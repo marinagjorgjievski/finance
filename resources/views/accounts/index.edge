@@ -24,35 +24,29 @@
         <tr>
           <th scope="col">Name</th>
           <th scope="col">Currency</th>
-          <th scope="col">User</th>
           <th scope="col"></th>
         </tr>
         </thead>
         @each(account in accounts)
-        <tbody>
-        <tr>
-          <td>{{account.name}}</td>
-          <td>
-            @if(account.currency)
-              {{account.currency.name}}
-            @endif
-          </td>
-          <td>
-            @if(account.user)
-            {{account.user.username}}
-            @endif
-          </td>
-          <td>
-            <div class="buttons">
-              <a href="{{ route('accounts.edit', { id: account.id}) }}" role="button" class="btn btn-secondary">Edit</a>
-              <form action="{{ route('accounts.destroy', { id: account.id}) }}?_method=DELETE" method="POST">
-                {{csrfField()}}
-                <button type="submit" class="btn btn-secondary">Delete</button>
-              </form>
-            </div>
-          </td>
-        </tr>
-        </tbody>
+          <tbody>
+            <tr>
+              <td>{{account.name}}</td>
+              <td>
+                @if(account.currency)
+                  {{account.currency.name}}
+                @endif
+              </td>
+              <td>
+                <div class="buttons">
+                  <a href="{{ route('accounts.edit', { id: account.id}) }}" role="button" class="btn btn-secondary">Edit</a>
+                  <form action="{{ route('accounts.destroy', { id: account.id}) }}?_method=DELETE" method="POST">
+                    {{csrfField()}}
+                    <button type="submit" class="btn btn-secondary">Delete</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          </tbody>
         @endeach
       </table>
     @endif
