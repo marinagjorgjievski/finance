@@ -48,7 +48,7 @@ class EntryController {
     const validation = await validate(request.all(),{
       account_id: 'required|min:1|max:255',
       date: 'required|min:1',
-      value: 'required|min:1'
+      amount: 'required|min:1'
     })
 
     if (validation.fails()) {
@@ -58,7 +58,7 @@ class EntryController {
 
     entry.account_id = request.input('account_id')
     entry.date = request.input('date')
-    entry.value = request.input('value')
+    entry.amount = request.input('amount')
 
     await entry.save()
 
@@ -114,12 +114,12 @@ class EntryController {
     const validation = await validate(request.all(),{
       account_id: 'required|min:1|max:255',
       date: 'required|min:1',
-      value: 'required|min:1'
+      amount: 'required|min:1'
     })
 
     entry.account_id = request.input('account_id')
     entry.date = request.input('date')
-    entry.value = request.input('value')
+    entry.amount = request.input('amount')
 
     await entry.save()
 

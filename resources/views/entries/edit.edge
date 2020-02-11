@@ -25,8 +25,8 @@
             <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-gray w-100" type="date" name="date" id="date" value="{{ old('date', entry.date)}}">{{elIf('<span class = "text-danger">$self</span>', getErrorFor('date'), hasErrorFor('date')) }}
           </div>
           <div class="mt3">
-            <label class="db fw6 lh-copy f6" For="value">Value</label>
-            <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-gray w-100" type="number" name="value" id="value" value="{{ old('value', entry.value)}}">{{elIf('<span class = "text-danger">$self</span>', getErrorFor('value'), hasErrorFor('value')) }}
+            <label class="db fw6 lh-copy f6" For="amount">Amount</label>
+            <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-gray w-100" type="number" name="amount" id="amount" value="{{ old('amount', entry.amount)}}">{{elIf('<span class = "text-danger">$self</span>', getErrorFor('amount'), hasErrorFor('amount')) }}
           </div>
         </fieldset>
         <div class="btn-position">
