@@ -25,6 +25,7 @@ class AccountController {
       .with('currency')
       .with('user')
       .where('user_id', auth.user.id)
+      .orderBy('name')
       .fetch();
 
     return view.render('accounts.index', {
