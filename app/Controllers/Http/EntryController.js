@@ -24,6 +24,7 @@ class EntryController {
     const entries = await Entry
       .query()
       .with('account')
+      .orderBy('date')
       .fetch();
 
     return view.render('entries.index', {

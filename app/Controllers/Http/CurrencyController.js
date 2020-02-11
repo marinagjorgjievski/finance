@@ -18,7 +18,10 @@ class CurrencyController {
 
 
   async index ({ request, response, view }) {
-    const currencies = await Currency.all();
+    const currencies = await Currency
+      .query()
+      .orderBy('name')
+      .fetch();
 
     return view.render('currencies.index', {
       name: 'List of currencies',
